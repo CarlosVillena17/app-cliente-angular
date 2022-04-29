@@ -1,0 +1,79 @@
+<div class="card bg-light">
+  <div class="card-header">{{titulo}}</div>
+  <div class="card-body">
+    <h4 class="card-title">
+      <a routerLink="/clientes" class="btn btn-primary btn-xs">&laquo; volver</a>
+    </h4>
+  <form >
+    <div class="form-group row" *ngIf="factura">
+      <label for="cliente" class="col-sm-2 control-label">Cliente</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" value="{{factura.cliente.nombre}} {{factura.cliente.apellido}}" name="cliente" disabled>
+      </div>
+    </div>
+    <br>
+    <div class="form-group row">
+      <label for="" class="col-sm-2 control-label">Descripcion</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" [(ngModel)]="factura.descripcion" name="descripcion">
+      </div>
+    </div>
+    <br>
+    <div class="form-group row">
+      <label for="" class="col-sm-2 control-label">Observacion</label>
+      <div class="col-sm-6">
+        <textarea type="text" class="form-control"
+        [(ngModel)]="factura.observacion" name="observacion"></textarea>
+      </div>
+    </div>
+    <br>
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Agregar productos</mat-label>
+          <input type="text"
+                 placeholder="Ingresar productos"
+                 aria-label="Productos"
+                 matInput
+                 [formControl]="autocompleteControl"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombre" (optionSelected)="seleccionarProducto($event)">
+            <mat-option *ngFor="let producto of  productosFiltrados | async" [value]="producto.nombre">
+              {{producto.nombre}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+    <br>
+    <table class="table table-striped table-hover" *ngIf="factura.items.length>0">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of factura.items">
+          <td>{{item.producto.nombre}}</td>
+          <td>{{item.producto.precio}}</td>
+          <td>{{item.cantidad}}</td>
+          <td>{{item.producto.precio*item.cantidad}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <input type="submit" value="Crear Factura" class="btn btn-secundary"class="form-control">
+      </div>
+    </div>
+    <div class="example-button-row">
+      <button mat-raised-button color="accent"></button>
+    </div>
+
+  </form>
+  </div>
+</div>

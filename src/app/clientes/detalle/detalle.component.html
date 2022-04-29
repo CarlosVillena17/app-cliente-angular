@@ -1,0 +1,86 @@
+<div  *ngIf="modal.modal" class="modal" tabindex="-1" style="display: block">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" (click)="cerrarModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md">
+              <ul class="list-group">
+                <li class="list-group-item active">{{ cliente.nombre }}</li>
+                <li class="list-group-item">{{ cliente.apellido }}</li>
+                <li class="list-group-item">{{ cliente.email }}</li>
+                <li class="list-group-item">{{ cliente.createAt | date: 'fullDate'}}</li>
+                <li class="list-group-item">{{ cliente.region.nombre}}</li>
+              </ul>
+              <div class="input-group mt-4">
+                <input
+                  (change)="selecionarFoto($event)"
+                  type="file"
+                  class="form-control"
+                  id="inputGroupFile04"
+                  aria-describedby="inputGroupFileAddon04"
+                  aria-label="Upload"
+                />
+                <button
+                  (click)="subirFoto()"
+                  class="btn btn-outline-primary"
+                  type="button"
+                  id="inputGroupFileAddon04"
+                >
+                  Subir foto
+                </button>
+              </div>
+            </div>
+            <div class="col-sm">
+              <img *ngIf="cliente?.foto"
+              src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.nombre}}"
+              class="img-thumbnail rounded">
+            </div>
+          </div>
+          <div class="alert alert-info my-4" *ngIf="cliente.facturas.length== 0 ||  cliente.facturas==null">
+            No hay facturas para el cliente {{cliente.nombre}}
+          </div>
+          <div class="row"   *ngIf="cliente.facturas.length > 0">
+            <table class="table table-bordered table-striped">
+              <thead>
+                 <tr>
+                   <th>Folio</th>
+                   <th>Descripcion</th>
+                   <th>Fecha</th>
+                   <th>Total</th>
+                   <th>Detalle</th>
+                   <th>Eliminar</th>
+                 </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of cliente.facturas">
+                    <td>{{item.id}}</td>
+                    <td>{{item.descripcion}}</td>
+                    <td>{{item.createAt}}</td>
+                    <td>{{item.total | currency}}</td>
+                    <td>
+                      <button class="btn btn-primary" type="button"
+                      [routerLink]="['/facturas', item.id]">Ver</button>
+                    </td>
+                    <td>
+                      <button class="btn btn-danger" type="button"
+                      (click)="eliminar(item)">Eliminar</button>
+                    </td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

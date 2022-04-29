@@ -1,0 +1,54 @@
+<div class="card bg-light" *ngIf="factura">
+  <div class="card-header">{{titulo}} : {{factura.descripcion}}</div>
+  <div class="card-body">
+    <h4 class="card-title">
+      <a routerLink="/clientes" class="btn btn-primary btn-xs">&laquo; volver</a>
+    </h4>
+    <ul class="list-group my-2">
+      <li class="list-group-item list-group-item-primary">Datos del Cliente</li>
+      <li class="list-group-item">Nombre:  {{factura.cliente.nombre}} </li>
+      <li class="list-group-item">Apellido: {{factura.cliente.apellido}} </li>
+    </ul>
+    <ul class="list-group my-2">
+      <li class="list-group-item list-group-item-primary">Datos Factura</li>
+      <li class="list-group-item">Folio: {{factura.id}}</li>
+      <li class="list-group-item">Descripcion: {{factura.descripcion}}</li>
+      <li class="list-group-item">Fecha: {{factura.createAt}}</li>
+    </ul>
+
+    <div class="card card-body" *ngIf="!factura">
+      <p class="alert alert-danger">El cliente no tiene facturas</p>
+    </div>
+
+    <table class="table table-striped table-hover my-3" *ngIf="factura">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Importe</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of factura.items">
+            <td>{{item.producto.nombre}}</td>
+            <td>S/ {{item.producto.precio | number}}</td>
+            <td>{{item.cantidad }}</td>
+            <td>S/ {{item.importe | number}}</td>
+          </tr>
+        </tbody>
+    </table>
+    <h3 class="float-right"> TOTAL : S/ {{factura.total | number}}</h3>
+    <div class="card border-info">
+      <div class="card card-header">
+        Observaciones
+      </div>
+      <div class="card card-body" *ngIf="factura.observacion">
+        <p>{{factura.observacion}}</p>
+      </div>
+      <div class="card card-body" *ngIf="!factura.observacion">
+        <p class="alert alert-info">No hay observaciones</p>
+      </div>
+    </div>
+  </div>
+</div>

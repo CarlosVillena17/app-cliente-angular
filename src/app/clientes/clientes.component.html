@@ -1,0 +1,57 @@
+<app-detalle *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></app-detalle>
+<div class="card text-dark bg-light mb-3">
+  <div class="card-header">
+    <h3 class="card-title">Listado clientes</h3>
+  </div>
+  <button class="btn btn-primary col-2 mt-4 ml-4" routerLink="/clientes/form">Crear Cliente</button>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Foto</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Email</th>
+          <th scope="col">Region</th>
+          <th scope="col">Editar</th>
+          <th scope="col">Eliminar</th>
+          <th scope="col">Crear Factura</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td>
+            <a (click)="abrirModal(cliente)" >
+              <img *ngIf="cliente?.foto"
+              src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.nombre}}"
+              width="50px" style="cursor: pointer;">
+              <img *ngIf="!cliente?.foto"
+              src="http://localhost:8080/images/nouser.png" alt="sin foto"
+              width="50px" style="cursor: pointer;">
+            </a>
+          </td>
+          <td>{{cliente.nombre}}</td>
+          <td>{{cliente.apellido}}</td>
+          <td>{{cliente.createAt}}</td>
+          <td>{{cliente.email}}</td>
+          <td>{{cliente.region.nombre}}</td>
+          <td>
+            <button [routerLink]="['/clientes/form', cliente.id]"
+            class="btn btn-primary" role="button">Editar</button>
+          </td>
+          <td>
+            <button (click)="delete(cliente)"
+            class="btn btn-danger" role="button">Eliminar</button>
+          </td>
+          <td>
+            <button [routerLink]="['/facturas/form', cliente.id]"
+            class="btn btn-info" role="button">Crear Factura</button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    <app-paginator *ngIf="paginator" [paginator]="paginator"></app-paginator>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+{
+  "nombre ": "laptop",
+  "precio": 40.2,
+  "active": true,
+  "create_at": new Date("12/12/2020"),
+  "somedata": [1, "a" , []],
+  "factura": {
+    "nombre ": "dell",
+    "version ": "000001-L"
+  }
+}
+
+{
+  "nombre ": "laptop",
+  "precio": 40.2,
+  "active": true,
+  "create_at": new Date("12/12/2020"),
+  "somedata": [1, "a" , []],
+  "factura": {
+    "nombre ": "dell",
+    "version ": "000001-L"
+  }
+}
